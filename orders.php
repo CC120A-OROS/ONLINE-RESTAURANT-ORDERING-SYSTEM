@@ -68,11 +68,11 @@ $result = $conn->query($query);
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <?php
                         $status = strtolower($row['status']);
-                        $btnClass = 'btn-secondary';
-                        if ($status === 'new order') $btnClass = 'btn-primary';
-                        elseif ($status === 'delivered') $btnClass = 'btn-success';
-                        elseif ($status === 'cancelled') $btnClass = 'btn-danger';
-                        elseif ($status === 'pending') $btnClass = 'btn-warning';
+                        $textClass = 'text-secondary';
+                        if ($status === 'new order') $textClass = 'text-primary';
+                        elseif ($status === 'delivered') $textClass = 'text-success';
+                        elseif ($status === 'cancelled') $textClass = 'text-danger';
+                        elseif ($status === 'pending') $textClass = 'text-warning';
                     ?>
                     <tr>
                         <td><?= htmlspecialchars($row['menu_name']); ?></td>
@@ -86,9 +86,9 @@ $result = $conn->query($query);
                             <?php endif; ?>
                         </td>
                         <td>
-                            <button class="btn btn-sm <?= $btnClass ?>">
+                            <span class="fw-semibold <?= $textClass ?>">
                                 <?= htmlspecialchars($row['status']); ?>
-                            </button>
+                            </span>
                         </td>
                     </tr>
                 <?php endwhile; ?>

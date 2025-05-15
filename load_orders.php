@@ -53,11 +53,11 @@ $result = $conn->query($query);
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <?php
                         $status = strtolower($row['status']);
-                        $btnClass = 'btn-secondary';
-                        if ($status === 'new order') $btnClass = 'btn-primary';
-                        elseif ($status === 'delivered') $btnClass = 'btn-success';
-                        elseif ($status === 'cancelled') $btnClass = 'btn-danger';
-                        elseif ($status === 'pending') $btnClass = 'btn-warning';
+                        $textClass = 'text-secondary';
+                        if ($status === 'new order') $textClass = 'text-primary';
+                        elseif ($status === 'delivered') $textClass = 'text-success';
+                        elseif ($status === 'cancelled') $textClass = 'text-danger';
+                        elseif ($status === 'pending') $textClass = 'text-warning';
                     ?>
                     <tr>
                         <td><?= $row['id']; ?></td>
@@ -76,9 +76,9 @@ $result = $conn->query($query);
                         </td>
                         <td><?= htmlspecialchars($row['delivery_method']); ?></td>
                         <td>
-                            <button class="btn btn-sm <?= $btnClass ?>">
+                            <span class="fw-semibold <?= $textClass ?>">
                                 <?= htmlspecialchars($row['status']); ?>
-                            </button>
+                            </span>
                         </td>
                         <td>
                             <div class="d-flex gap-1 justify-content-center">
@@ -102,8 +102,6 @@ $result = $conn->query($query);
             <?php endif; ?>
         </tbody>
     </table>
-
-    <a href="admin_dashboard.php" class="btn btn-secondary mt-3">Back</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
