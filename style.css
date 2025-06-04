@@ -58,7 +58,7 @@ input[type = "text"], input[type = "password"], input[type = "email"] {
 .btn {
     width: 70%;
     height: 45px;
-    background: #fff;
+    background: skyblue;
     border: none;
     outline: none;
     border-radius: 40px;

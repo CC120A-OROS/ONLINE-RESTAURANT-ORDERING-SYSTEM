@@ -79,16 +79,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])) {
             position: absolute;
             top: 20px;
             left: 20px;
-            color: white;
+            color: #000;
             border: none;
             padding: 10px 15px;
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
+            background-color: skyblue;
         }
 
         .back:hover {
-            background-color: #333;
+            background-color: lightblue;
         }
 
         h1 {
@@ -113,11 +114,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])) {
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .meal-card img {
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .image-wrapper img {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            transition: transform 0.4s ease;
             border-radius: 10px;
+        }
+
+        .image-wrapper:hover img {
+            transform: scale(1.1);
         }
 
         .meal-card h3 {
@@ -137,8 +150,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])) {
 
         .cart-button {
             padding: 8px 12px;
-            background-color: #4caf50;
-            color: white;
+            background-color: skyblue;
+            color: #000;
             border: none;
             cursor: pointer;
             font-size: 14px;
@@ -146,30 +159,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])) {
         }
 
         .cart-button:hover {
-            background-color: #388e3c;
+            background-color: lightblue;
         }
 
-        .image-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.ribbon {
-    position: absolute;
-    top: 15px;
-    right: -35px;
-    width: 120px;
-    background: red;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    transform: rotate(45deg);
-    z-index: 10;
-    font-size: 14px;
-    padding: 5px 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    letter-spacing: 1px;
-}
+        .ribbon {
+            position: absolute;
+            top: 15px;
+            right: -35px;
+            width: 120px;
+            background: red;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            transform: rotate(45deg);
+            z-index: 10;
+            font-size: 14px;
+            padding: 5px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
 
     </style>
 </head>
@@ -224,7 +232,6 @@ if ($result && $result->num_rows > 0) {
                 }
                 ?>
 
-                <!-- Hidden fields for cart -->
                 <input type="hidden" name="name" value="<?= htmlspecialchars($meal['name']) ?>">
                 <input type="hidden" name="price" value="<?= $discounted_price ?>">
                 <input type="hidden" name="image" value="<?= htmlspecialchars($meal['image']) ?>">
