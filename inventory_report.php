@@ -20,7 +20,7 @@ $result = $connection->query($sql);
 <body>
 
 <div class="container mt-5">
-    <h3 class="mb-4 text-primary">Inventory Report</h3>
+    <h2 class="mb-4 text-black">Inventory Report</h2>
 
     <table id="inventoryTable" class="table table-bordered table-striped">
         <thead class="table-white">
@@ -54,8 +54,6 @@ $result = $connection->query($sql);
             <?php endwhile; ?>
         </tbody>
     </table>
-
-    <a href="restaurant_main.php" class="btn btn-secondary mt-3">Back</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

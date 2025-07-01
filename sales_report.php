@@ -80,7 +80,8 @@ if ($result_items->num_rows > 0) {
         }
         h2 {
             text-align: center;
-            color: blue;
+            color: black;
+            font-weight: bold;
         }
         .summary {
             text-align: center;

@@ -12,7 +12,7 @@ $result = $conn->query($query);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All Orders</title>
+    <title>My Orders</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
@@ -25,12 +25,22 @@ $result = $conn->query($query);
             object-fit: cover;
             border-radius: 8px;
         }
+
+        .btn-custom-back {
+            background-color: skyblue; 
+            color: #000 !important;   
+            border: none;
+        }
+
+        .btn-custom-back:hover {
+            background-color: lightblue;
+        }
     </style>
 </head>
 <body>
 
 <div class="container mt-5">
-    <h3 class="mb-4 text-success">My Orders</h3>
+    <h3 class="mb-4 text-black">My Orders</h3>
 
     <?php if (isset($_GET['message'])): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -100,7 +110,7 @@ $result = $conn->query($query);
         </tbody>
     </table>
 
-    <a href="restaurant_main.php" class="btn btn-secondary mt-3">Back</a>
+    <a href="restaurant_main.php" class="btn btn-custom-back mt-3">Back</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

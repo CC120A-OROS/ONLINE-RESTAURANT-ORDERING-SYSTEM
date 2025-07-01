@@ -33,14 +33,13 @@ $result = $conn->query($sql);
 </head>
 <body>
 <div class="container mt-4">
-    <h2 class="mb-4 text-primary">All menu data</h2>
+    <h2 class="mb-4 text-black">All Menu</h2>
     <table id="menuTable" class="table table-striped table-bordered">
         <thead class="table-light">
             <tr>
                 <th>Menu</th>
                 <th>Price</th>
                 <th>Image</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -50,14 +49,6 @@ $result = $conn->query($sql);
                 <td><?= number_format($row['price'], 2); ?></td>
                 <td>
                     <img src="<?= htmlspecialchars($row['image']); ?>" class="food-image" alt="Meal Image">
-                </td>
-                <td>
-                    <a href="edit_menu.php?id=<?= $row['id']; ?>" class="text-warning me-2">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="delete_menu.php?id=<?= $row['id']; ?>" class="text-danger" onclick="return confirm('Are you sure you want to delete this item?')">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
                 </td>
             </tr>
             <?php endwhile; ?>

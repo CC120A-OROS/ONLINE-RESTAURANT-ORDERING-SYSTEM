@@ -39,53 +39,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 $conn->close();
 ?>
+
 <?php if ($added): ?>
     <div style="text-align:center; padding: 30px;">
         <img src="<?php echo $image_path; ?>" alt="Uploaded Image" style="width:150px; height:150px; object-fit:cover; border:1px solid #ccc;">
         <h3 style="margin-top: 20px;"><?php echo htmlspecialchars($menu); ?></h3>
         <p>₱<?php echo number_format($price, 2); ?></p>
         <p style="color: green;"><strong><?php echo htmlspecialchars($menu); ?> Added Successfully</strong></p>
-        <a href="admin_dashboard.php"style="padding: 10px 20px;">Back</a>
+        <a href="admin_dashboard.php" style="padding: 10px 20px; border: none; background: skyblue; border-radius: 5px; text-decoration: none; color: black;">Back</a>
     </div>
 <?php else: ?>
-    <div>
-        <h2>Add New Menu</h2>
-        <form method="POST" action="add_new_menu.php" enctype="multipart/form-data">
-            <label for="menu">Menu Name</label>
-            <input type="text" name="menu" required>
+    <h3>Add New Menu</h3>
+    <form method="POST" action="add_new_menu.php" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="menu" class="form-label">Menu Name</label>
+            <input type="text" name="menu" class="form-control" required>
+        </div>
 
-            <label for="price">Price</label>
-            <input type="number" name="price" step="0.01" required>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" name="price" step="0.01" class="form-control" required>
+        </div>
 
-            <label for="image">Image</label>
-            <input type="file" name="image" accept="image/*" required>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" name="image" accept="image/*" class="form-control" required>
+        </div>
 
-            <br>
-            <button type="submit">Add</button>
-        </form>
-    </div>
+        <div style="text-align: center;">
+            <button type="submit" class="custom-btn-blue">Add Menu</button>
+        </div>
+    </form>
 <?php endif; ?>
+
 <style>
     form {
         padding: 20px;
         background: #fff;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        max-width: 500px;
+        max-width: 400px;
+        margin-bottom: 40px;
     }
-    input[type="text"], input[type="number"], input[type="file"] {
+
+    .form-label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
         padding: 8px;
         width: 100%;
         margin-bottom: 15px;
+        box-sizing: border-box;
     }
-    button {
+
+    .custom-btn-blue {
+        background-color: skyblue;
+        color: black;
         padding: 10px 20px;
-        background: #007bff;
-        color: white;
         border: none;
+        border-radius: 5px;
         cursor: pointer;
     }
-    button:hover {
-        background: #0056b3;
+
+    .custom-btn-blue:hover {
+        background-color: #87cefa;
     }
 </style>

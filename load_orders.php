@@ -30,7 +30,7 @@ $result = $conn->query($query);
 <body>
 
 <div class="container mt-5">
-    <h3 class="mb-4 text-success">All Orders</h3>
+    <h3 class="mb-4 text-black">All Orders</h3>
 
     <table id="orderTable" class="table table-striped table-bordered">
         <thead class="table-light">
@@ -97,7 +97,7 @@ $result = $conn->query($query);
                 <?php endwhile; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="10" class="text-center">No orders found.</td>
+                    <td colspan="11" class="text-center">No orders found.</td>
                 </tr>
             <?php endif; ?>
         </tbody>

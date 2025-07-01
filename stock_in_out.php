@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $meal_id = intval($_POST['meal_id']);
     $quantity = intval($_POST['quantity']);
-    $action = $_POST['action']; 
+    $action = $_POST['action'];
 
     $sql = "SELECT stock FROM meals WHERE id = $meal_id";
     $result = $conn->query($sql);
@@ -52,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 $meals = $conn->query("SELECT * FROM meals");
-
 ?>
 
 <!DOCTYPE html>
@@ -61,15 +60,30 @@ $meals = $conn->query("SELECT * FROM meals");
     <meta charset="UTF-8">
     <title>Stock In/Out Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        .btn-skyblue {
+            background-color: skyblue;
+            color: black;
+            border: none;
+        }
+
+        .btn-skyblue:hover {
+            background-color: lightblue;
+            color: white;
+        }
+    </style>
 </head>
 <body class="bg-light">
 
 <div class="container mt-5">
-    <h2 class="menu_stock">Manage Menu Stock</h2>
+    <h2 class="mb-4 text-black">Manage Menu Stock</h2>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-hover align-middle">
-            <thead class="table-dark">
+        <table id="stockTable" class="table table-bordered table-striped align-middle">
+            <thead class="table-white">
                 <tr>
                     <th>Menu Name</th>
                     <th>Price</th>
@@ -82,20 +96,20 @@ $meals = $conn->query("SELECT * FROM meals");
                 <?php if ($meals && $meals->num_rows > 0): ?>
                     <?php while ($meal = $meals->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($meal['name']); ?></td>
-                            <td>₱<?php echo htmlspecialchars(number_format($meal['price'], 2)); ?></td>
-                            <td><?php echo htmlspecialchars($meal['stock']); ?></td>
+                            <td><?= htmlspecialchars($meal['name']); ?></td>
+                            <td>₱<?= number_format($meal['price'], 2); ?></td>
+                            <td><?= $meal['stock']; ?></td>
                             <td>
                                 <form action="stock_in_out.php" method="POST" class="d-flex align-items-center gap-2">
-                                    <input type="hidden" name="meal_id" value="<?php echo $meal['id']; ?>">
+                                    <input type="hidden" name="meal_id" value="<?= $meal['id']; ?>">
                                     <input type="hidden" name="action" value="in">
                                     <input type="number" name="quantity" min="1" required class="form-control form-control-sm" placeholder="Qty" style="width: 80px;">
-                                    <button type="submit" class="btn btn-success btn-sm">Stock In</button>
+                                    <button type="submit" class="btn btn-skyblue btn-sm">Stock In</button>
                                 </form>
                             </td>
                             <td>
                                 <form action="stock_in_out.php" method="POST" class="d-flex align-items-center gap-2">
-                                    <input type="hidden" name="meal_id" value="<?php echo $meal['id']; ?>">
+                                    <input type="hidden" name="meal_id" value="<?= $meal['id']; ?>">
                                     <input type="hidden" name="action" value="out">
                                     <input type="number" name="quantity" min="1" required class="form-control form-control-sm" placeholder="Qty" style="width: 80px;">
                                     <button type="submit" class="btn btn-danger btn-sm">Stock Out</button>
@@ -113,7 +127,17 @@ $meals = $conn->query("SELECT * FROM meals");
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#stockTable').DataTable();
+    });
+</script>
+
 </body>
 </html>
 
