@@ -74,6 +74,16 @@ $meals = $conn->query("SELECT * FROM meals");
             background-color: lightblue;
             color: white;
         }
+
+        .btn-custom-back {
+            background-color: skyblue; 
+            color: #000 !important;   
+            border: none;
+        }
+
+        .btn-custom-back:hover {
+            background-color: lightblue;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -125,6 +135,7 @@ $meals = $conn->query("SELECT * FROM meals");
             </tbody>
         </table>
     </div>
+    <a href="admin_dashboard.php" class="btn btn-custom-back mt-3">Back</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
