@@ -15,6 +15,18 @@ if (empty($cart_items)) {
 <head>
     <title>Checkout</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .btn-skyblue {
+            background-color: skyblue;
+            color: #000;
+            border: none;
+        }
+        .btn-skyblue:hover {
+            background-color: lightblue;
+            color: #000;
+        }
+    </style>
+
 </head>
 <body>
 <div class="container mt-5 bg-light p-4 rounded">
@@ -74,8 +86,8 @@ if (empty($cart_items)) {
             <textarea name="address" class="form-control"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-success">Confirm Order</button>
-        <a href="cart.php" class="btn btn-secondary">Back to Cart</a>
+        <button type="submit" class="btn btn-skyblue">Confirm Order</button>
+        <a href="cart.php" class="btn btn-skyblue">Back to Cart</a>
     </form>
 </div>
 

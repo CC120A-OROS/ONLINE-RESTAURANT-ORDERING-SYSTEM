@@ -25,6 +25,16 @@ $result = $conn->query($query);
             object-fit: cover;
             border-radius: 8px;
         }
+
+        .btn-custom-back {
+            background-color: skyblue; 
+            color: #000 !important;   
+            border: none;
+        }
+
+        .btn-custom-back:hover {
+            background-color: lightblue;
+        }
     </style>
 </head>
 <body>
@@ -102,6 +112,7 @@ $result = $conn->query($query);
             <?php endif; ?>
         </tbody>
     </table>
+      <a href="admin_dashboard.php" class="btn btn-custom-back mt-3">Back</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

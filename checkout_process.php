@@ -17,25 +17,37 @@ if ($delivery_method === "Delivery" && empty($address)) {
     exit();
 }
 
-$first_item = $cart_items[0] ?? [];
-$menu_name = $first_item['name'] ?? '';
-$menu_price = $first_item['price'] ?? 0.00;
-$menu_quantity = $first_item['quantity'] ?? 1;
-$menu_image = $first_item['image'] ?? '';
+if (empty($cart_items)) {
+    echo "Your cart is empty.";
+    exit();
+}
 
 $stmt = $conn->prepare("
     INSERT INTO orders (customer_name, phone, address, menu_name, menu_price, menu_quantity, menu_image, delivery_method) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 ");
 
-$stmt->bind_param("sssssdss", $name, $phone, $address, $menu_name, $menu_price, $menu_quantity, $menu_image, $delivery_method);
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
 
-if (!$stmt->execute()) {
-    die("Error saving order: " . $stmt->error);
+foreach ($cart_items as $item) {
+    $menu_name = $item['name'];
+    $menu_price = $item['price'];
+    $menu_quantity = $item['quantity'];
+    $menu_image = $item['image'];
+
+    $stmt->bind_param("sssssdss", $name, $phone, $address, $menu_name, $menu_price, $menu_quantity, $menu_image, $delivery_method);
+    if (!$stmt->execute()) {
+        die("Error saving order: " . $stmt->error);
+    }
+
+    $escaped_name = $conn->real_escape_string($menu_name);
+    $deduct_sql = "UPDATE meals SET stock = stock - $menu_quantity WHERE name = '$escaped_name' AND stock >= $menu_quantity";
+    $conn->query($deduct_sql);
 }
 
 $stmt->close();
-
 unset($_SESSION['cart']);
 $conn->close();
 ?>
@@ -45,13 +57,24 @@ $conn->close();
 <head>
     <title>Order Confirmed</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .btn-skyblue {
+            background-color: skyblue;
+            color: #000;
+            border: none;
+        }
+        .btn-skyblue:hover {
+            background-color: lightblue;
+            color: #000;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
     <div class="alert alert-success">
         <h4>Thank you, <?php echo htmlspecialchars($name); ?>!</h4>
         <p>Your order has been placed successfully.</p>
-        <a href="menu.php" class="btn btn-primary">Back to Menu</a>
+        <a href="menu.php" class="btn btn-skyblue">Back to Menu</a>
     </div>
 </div>
 </body>

@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 
 $host = 'localhost';
@@ -179,6 +179,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])) {
             letter-spacing: 1px;
         }
 
+        .stock-label {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+
     </style>
 </head>
 
@@ -202,20 +208,17 @@ $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
     while ($meal = $result->fetch_assoc()) {
+        $price = $meal['price'];
+        $discount = isset($meal['discount']) ? $meal['discount'] : 0;
+        $stock = $meal['stock'];
+        $discounted_price = $price;
+
+        if ($discount > 0) {
+            $discounted_price = $price - ($price * ($discount / 100));
+        }
         ?>
         <div class="meal-card">
             <form method="post" action="menu.php">
-
-                <?php
-                $price = $meal['price'];
-                $discount = isset($meal['discount']) ? $meal['discount'] : 0;
-                $discounted_price = $price;
-
-                if ($discount > 0) {
-                    $discounted_price = $price - ($price * ($discount / 100));
-                }
-                ?>
-
                 <div class="image-wrapper">
                     <img src="<?= htmlspecialchars($meal['image']) ?>" alt="<?= htmlspecialchars($meal['name']) ?>">
                     <?php if ($discount > 0): ?>
@@ -232,14 +235,19 @@ if ($result && $result->num_rows > 0) {
                 }
                 ?>
 
+                <h3><?= htmlspecialchars($meal['name']) ?></h3>
+                <p class="stock-label">Stock:<?= $stock ?></p>
+
                 <input type="hidden" name="name" value="<?= htmlspecialchars($meal['name']) ?>">
                 <input type="hidden" name="price" value="<?= $discounted_price ?>">
                 <input type="hidden" name="image" value="<?= htmlspecialchars($meal['image']) ?>">
 
-                <h3><?= htmlspecialchars($meal['name']) ?></h3>
-
                 <div class="button-group">
-                    <button class="cart-button" type="submit" name="add_to_cart">Add to Cart</button>
+                    <?php if ($stock > 0): ?>
+                        <button class="cart-button" type="submit" name="add_to_cart">Add to Cart</button>
+                    <?php else: ?>
+                        <button class="cart-button" type="button" disabled style="background-color: lightgray; cursor: not-allowed;">Out of Stock</button>
+                    <?php endif; ?>
                 </div>
             </form>
         </div>

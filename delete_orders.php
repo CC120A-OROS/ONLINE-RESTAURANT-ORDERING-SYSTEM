@@ -11,6 +11,6 @@ if (isset($_GET['id'])) {
     $conn->close();
 }
 
-header("Location: orders.php?message=deleted");
+header("Location: load_orders.php?message=deleted");
 exit();
 ?>
